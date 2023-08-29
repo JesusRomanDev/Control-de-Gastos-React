@@ -1,5 +1,6 @@
 import React from 'react'
 import NuevoPresupuesto from './NuevoPresupuesto'
+import ControlPresupuesto from './ControlPresupuesto'
 
 const Header = ({presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPresupuesto}) => {
     
@@ -8,7 +9,9 @@ const Header = ({presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPres
         <h1>Planificador de Gastos</h1>
 
         {isValidPresupuesto ? ( /* si es true en isValidPresupuesto entonces imprimeme lo de abajo, de otra manera imprimime el componente de NuevoPresupuesto */
-            <p>Control Presupuesto</p>
+            <ControlPresupuesto 
+            presupuesto={presupuesto}
+            />
         ) : (
             <NuevoPresupuesto 
             presupuesto={presupuesto}
