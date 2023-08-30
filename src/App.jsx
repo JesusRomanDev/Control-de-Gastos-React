@@ -33,6 +33,7 @@ function App() {
   const guardarGasto = (gasto) => { //tomando como parametro un objeto de gasto
     console.log(gasto);
     gasto.id = generarId();
+    gasto.fecha = Date.now();
     setGastos([...gastos, gasto])
 
     //Para que se cierre cuando agregamos el gasto
