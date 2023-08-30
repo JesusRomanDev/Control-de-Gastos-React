@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import IconoNuevoGasto from "./img/nuevo-gasto.svg"
 import Modal from '../components/Modal';
 import { generarId } from './helpers';
+import ListadoGastos from '../components/ListadoGastos';
 
 function App() {
   const [presupuesto, setPresupuesto] = useState(0); //estos van para el formulario, pasando primero por el Header luego a Nuevo Presupuesto que es donde esta el formulario
@@ -52,13 +53,20 @@ function App() {
       />
 
       {isValidPresupuesto && (
-            <div className='nuevo-gasto'>
-              <img src={IconoNuevoGasto} 
-              alt="iconoNuevoGasto" 
-              onClick={handleNuevoGasto}
-              />
-              
-            </div>
+        <>
+          <main>
+            <ListadoGastos 
+            gastos={gastos} //pasandole el array de gastos para mostrarlo
+            />
+          </main>
+          <div className='nuevo-gasto'>
+            <img src={IconoNuevoGasto} 
+            alt="iconoNuevoGasto" 
+            onClick={handleNuevoGasto}
+            />
+            
+          </div>
+        </>
       )}
 
       {modal && <Modal 
