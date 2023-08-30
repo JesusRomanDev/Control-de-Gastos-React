@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Header from '../components/Header'
 import IconoNuevoGasto from "./img/nuevo-gasto.svg"
 import Modal from '../components/Modal';
+import { generarId } from './helpers';
 
 function App() {
   const [presupuesto, setPresupuesto] = useState(0); //estos van para el formulario, pasando primero por el Header luego a Nuevo Presupuesto que es donde esta el formulario
@@ -16,6 +17,9 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   //Nota IMPORTANTE: al parecer cuando usamos un useState que su valor es un booleano (true/false), el true/false de la variable se usa para los ternarios (en el HTML/return), en cambio la funcion modificadora si la usamos directamente al poner setAnimarModal(false/true), solo para modificar
 
+    //Para el arreglo de objetos, este lo usaremos en la funcion de guardarGasto
+    const [gastos, setGastos] = useState([]);
+
   const handleNuevoGasto = () => {
     setModal(true);
 
@@ -27,6 +31,15 @@ function App() {
   //Creando una funcion en vez de un Hook (simplemente para hacerlo de forma diferente) para pasarselo al componente Modal
   const guardarGasto = (gasto) => { //tomando como parametro un objeto de gasto
     console.log(gasto);
+    gasto.id = generarId();
+    setGastos([...gastos, gasto])
+
+    //Para que se cierre cuando agregamos el gasto
+    setAnimarModal(false);
+
+    setTimeout(() => {
+        setModal(false);
+    }, 1000);
   }
 
   return (

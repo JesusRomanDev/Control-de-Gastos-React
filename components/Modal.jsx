@@ -9,9 +9,6 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
     const [nombre, setNombre] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [categoria, setCategoria] = useState('');
-
-    //Para el arreglo de objetos
-    const [gastos, setGastos] = useState({});
     
     const ocultarModal = () => {
         setAnimarModal(false);
@@ -62,7 +59,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
                 id='nombre'
                 placeholder='Añade el nombre del Gasto'
                 value={nombre}
-                onClick={(e)=>setNombre(e.target.value)}
+                onChange={(e)=>setNombre(e.target.value)}
                 />
             </div>
 
@@ -73,14 +70,14 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
                 id='cantidad'
                 placeholder='Añade la cantidad del Gasto e.j. 300'
                 value={cantidad}
-                onClick={(e)=> setCantidad(Number(e.target.value))}
+                onChange={(e)=> setCantidad(Number(e.target.value))}
                 />
             </div>
 
             <div className='campo'>
                 <label htmlFor="categoria">Categoria</label>
 
-                <select  id="categoria" value={categoria} onClick={(e)=> setCategoria(e.target.value)}>
+                <select  id="categoria" value={categoria} onChange={(e)=> setCategoria(e.target.value)}>
                     <option value="">-- Seleccione --</option>
                     <option value="ahorro">Ahorro</option>
                     <option value="comida">Comida</option>
