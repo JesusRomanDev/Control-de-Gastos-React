@@ -24,6 +24,11 @@ function App() {
     }, 1000);
   }
 
+  //Creando una funcion en vez de un Hook (simplemente para hacerlo de forma diferente) para pasarselo al componente Modal
+  const guardarGasto = (gasto) => { //tomando como parametro un objeto de gasto
+    console.log(gasto);
+  }
+
   return (
     <>
       <Header 
@@ -47,6 +52,7 @@ function App() {
       setModal={setModal}
       animarModal={animarModal}
       setAnimarModal={setAnimarModal}
+      guardarGasto={guardarGasto}
       />}
     </>
   )
