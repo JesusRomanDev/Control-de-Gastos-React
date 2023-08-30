@@ -45,7 +45,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className={modal ? 'fijar' : ''}> {/* fijar nos permitira tener todo el alto de la pantalla cuando tengamos ya gastos y asi ocupe toda la pantalla y no se quede a medias height: 100vh y overflow:hidden */}
       <Header 
       presupuesto={presupuesto}
       setPresupuesto={setPresupuesto}
@@ -76,7 +76,7 @@ function App() {
       setAnimarModal={setAnimarModal}
       guardarGasto={guardarGasto}
       />}
-    </>
+    </div>
   )
 }
 
