@@ -18,7 +18,7 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   //Nota IMPORTANTE: al parecer cuando usamos un useState que su valor es un booleano (true/false), el true/false de la variable se usa para los ternarios (en el HTML/return), en cambio la funcion modificadora si la usamos directamente al poner setAnimarModal(false/true), solo para modificar
 
-    //Para el arreglo de objetos, este lo usaremos en la funcion de guardarGasto
+    //Para el arreglo de objetos, este lo usaremos en la funcion de guardarGasto y lo pasaremos a el componente ControlPresupuesto, pasando primero por Header
     const [gastos, setGastos] = useState([]);
 
   const handleNuevoGasto = () => {
@@ -51,6 +51,7 @@ function App() {
       setPresupuesto={setPresupuesto}
       isValidPresupuesto={isValidPresupuesto}
       setIsValidPresupuesto={setIsValidPresupuesto}
+      gastos={gastos}
       />
 
       {isValidPresupuesto && (
