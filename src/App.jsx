@@ -48,9 +48,19 @@ function App() {
   //Creando una funcion en vez de un Hook (simplemente para hacerlo de forma diferente) para pasarselo al componente Modal
   const guardarGasto = (gasto) => { //tomando como parametro un objeto de gasto
     console.log(gasto);
-    gasto.id = generarId();
-    gasto.fecha = Date.now();
-    setGastos([...gastos, gasto])
+    if(gasto.id){ //si gasto tiene un ID es que ya se habia creado ese objeto, por lo tanto se debe actualizar, de otra manera es nuevo
+      //Actualizar
+      //Iremos iterando por todo el array de objetos de gastos, si en alguno de los objetos que estamos iterando es igual al nuevo gasto entonces ese gasto ya existe, por lo tanto regresame este nuevo gasto (actualizado), de otra manera si no hay id parecido retorname tal cual esta (no le modifiques nada)
+      const gastosActualizados = gastos.map(gastoState =>{
+        return gastoState.id === gasto.id ? gasto : gastoState
+      })
+      setGastos(gastosActualizados);
+    }else{
+      //Nuevo Gasto
+      gasto.id = generarId(); //Nota importante: AQUI SE CREA EL ID, donde se llama la funcion de guardarGasto tenemos un parametro de id, pero va VACIO ya que le estamos pasando UN OBJETO COMO ARGUMENTO CUANDO LO LLAMAMOS, va asi id=''
+      gasto.fecha = Date.now();
+      setGastos([...gastos, gasto])
+    }
 
     //Para que se cierre cuando agregamos el gasto
     setAnimarModal(false);

@@ -10,12 +10,18 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar
     const [cantidad, setCantidad] = useState('');
     const [categoria, setCategoria] = useState('');
 
+    //Estos nos serviran para usarlos en la funcion guardarGasto, iran como vacios si es NUEVO, o CON INFORMACION SI YA EXISTEN
+    const [id, setId] = useState('');
+    const [fecha, setFecha] = useState('');
+
     //Este useEffect nos servira para que cuando cargue el componente de Modal, SI ES QUE gastoEditar tiene algo, entonces es que estamos editando y queremos que llene los campos del formulario, si no, pues no hagas nada, todo normal, se llenaran los campos a manopla
     useEffect(()=>{
         if(Object.keys(gastoEditar.length > 0)){
             setNombre(gastoEditar.nombre);
             setCantidad(gastoEditar.cantidad);
             setCategoria(gastoEditar.categoria);
+            setId(gastoEditar.id);
+            setFecha(gastoEditar.fecha);
         }
     }, [])
     
@@ -41,7 +47,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar
         }
 
         //Una vez pasada la validacion usaremos la funcion guardarGasto para crear el objeto
-        guardarGasto({nombre, cantidad, categoria});
+        guardarGasto({nombre, cantidad, categoria, id, fecha});
     }
 
   return (
@@ -57,7 +63,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar
             className={`formulario ${animarModal ? "animar" : 'cerrar'}`}
             onSubmit={handleSubmit}
         >
-            <legend>Nuevo Gasto</legend>
+            <legend>{gastoEditar.nombre ? 'Editar' : 'Nuevo Gasto'}</legend>
 
             {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
 
@@ -98,7 +104,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar
                 </select>
             </div>
 
-            <input type="submit" value='Añadir Gasto' />
+            <input type="submit" value={gastoEditar.nombre ? 'Editar' : 'Añadir Gasto'} />
         </form>
     </div>
   )
