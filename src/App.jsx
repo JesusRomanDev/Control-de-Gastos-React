@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import IconoNuevoGasto from "./img/nuevo-gasto.svg"
 import Modal from '../components/Modal';
@@ -18,8 +18,18 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   //Nota IMPORTANTE: al parecer cuando usamos un useState que su valor es un booleano (true/false), el true/false de la variable se usa para los ternarios (en el HTML/return), en cambio la funcion modificadora si la usamos directamente al poner setAnimarModal(false/true), solo para modificar
 
-    //Para el arreglo de objetos, este lo usaremos en la funcion de guardarGasto y lo pasaremos a el componente ControlPresupuesto, pasando primero por Header
-    const [gastos, setGastos] = useState([]);
+  //Para el arreglo de objetos, este lo usaremos en la funcion de guardarGasto y lo pasaremos a el componente ControlPresupuesto, pasando primero por Header
+  const [gastos, setGastos] = useState([]);
+  
+  //Definiendo un state mas para Gasto, pero primero pasando por ListadoGastos, este iniciara como objeto vacio para poder llenarse mas tarde, esta funcion modificadora ira a la funcion de LeadingAction cuando se de swipe a editar
+  const [gastoEditar, setGastoEditar] = useState({});
+
+  //Agregando un useEffect, para que cuando demos swipe se abra el modal y nos llene la informacion, este useeffect reaccionara cuando cambie gastoEditar
+  useEffect(()=>{
+    if(Object.keys(gastoEditar).length > 0){
+      handleNuevoGasto(); //llamando a la funcion handleNuevoGasto ya que hace esta accion
+    }
+  }, [gastoEditar])
 
   const handleNuevoGasto = () => {
     setModal(true);
@@ -59,6 +69,7 @@ function App() {
           <main>
             <ListadoGastos 
             gastos={gastos} //pasandole el array de gastos para mostrarlo
+            setGastoEditar={setGastoEditar}
             />
           </main>
           <div className='nuevo-gasto'>
