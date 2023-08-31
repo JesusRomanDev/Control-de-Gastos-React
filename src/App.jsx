@@ -70,6 +70,12 @@ function App() {
     }, 1000);
   }
 
+  //Para eliminar el gasto usaremos una funcion, esta se pasara a Gasto, pero pasando antes por ListadoGastos
+  const eliminarGasto = (id) =>{
+    const gastosActualizadosEliminados = gastos.filter(gastoEliminado => gastoEliminado.id !== id);
+    setGastos(gastosActualizadosEliminados);
+  }
+
   return (
     <div className={modal ? 'fijar' : ''}> {/* fijar nos permitira tener todo el alto de la pantalla cuando tengamos ya gastos y asi ocupe toda la pantalla y no se quede a medias height: 100vh y overflow:hidden */}
       <Header 
@@ -86,6 +92,7 @@ function App() {
             <ListadoGastos 
             gastos={gastos} //pasandole el array de gastos para mostrarlo
             setGastoEditar={setGastoEditar}
+            eliminarGasto={eliminarGasto}
             />
           </main>
           <div className='nuevo-gasto'>
