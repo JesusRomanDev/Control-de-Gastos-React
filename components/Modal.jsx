@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CerrarBtn from "../src/img/cerrar.svg"
 import Mensaje from './Mensaje';
-const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
+const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar}) => {
     //Para el error
     const [mensaje, setMensaje] = useState('');
 
@@ -9,6 +9,15 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto}) => {
     const [nombre, setNombre] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [categoria, setCategoria] = useState('');
+
+    //Este useEffect nos servira para que cuando cargue el componente de Modal, SI ES QUE gastoEditar tiene algo, entonces es que estamos editando y queremos que llene los campos del formulario, si no, pues no hagas nada, todo normal, se llenaran los campos a manopla
+    useEffect(()=>{
+        if(Object.keys(gastoEditar.length > 0)){
+            setNombre(gastoEditar.nombre);
+            setCantidad(gastoEditar.cantidad);
+            setCategoria(gastoEditar.categoria);
+        }
+    }, [])
     
     const ocultarModal = () => {
         setAnimarModal(false);

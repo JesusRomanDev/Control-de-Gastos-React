@@ -27,12 +27,18 @@ function App() {
   //Agregando un useEffect, para que cuando demos swipe se abra el modal y nos llene la informacion, este useeffect reaccionara cuando cambie gastoEditar
   useEffect(()=>{
     if(Object.keys(gastoEditar).length > 0){
-      handleNuevoGasto(); //llamando a la funcion handleNuevoGasto ya que hace esta accion
+      //Lo que hace este if es lo mismo que llamar a handleNuevoGasto salvo que aqui nuestro Objeto no es uno nuevo
+      setModal(true);
+
+      setTimeout(() => {
+        setAnimarModal(true);
+      }, 1000);
     }
   }, [gastoEditar])
 
   const handleNuevoGasto = () => {
     setModal(true);
+    setGastoEditar({}); //Nosotros sabemos que sera un Objeto Nuevo, esto nos ayuda porque cuando usamos el swipe editar, se llena la info del formulario, pero una vez que hayamos terminado, si queremos agregar un nuevo gasto se quedara con la info anterior
 
     setTimeout(() => {
       setAnimarModal(true);
@@ -87,6 +93,7 @@ function App() {
       animarModal={animarModal}
       setAnimarModal={setAnimarModal}
       guardarGasto={guardarGasto}
+      gastoEditar={gastoEditar} //pasandole el gastoEditar para que llene los campos en Modal
       />}
     </div>
   )
