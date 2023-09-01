@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CerrarBtn from "../src/img/cerrar.svg"
 import Mensaje from './Mensaje';
-const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar}) => {
+const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar, setGastoEditar}) => {
     //Para el error
     const [mensaje, setMensaje] = useState('');
 
@@ -27,6 +27,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar
     
     const ocultarModal = () => {
         setAnimarModal(false);
+        setGastoEditar({}); //REINICIANDO EL STATE, ya que si le damos swipe a editar y lo cerramos luego luego (no editamos nada), ahi se queda el state con el objeto
 
         setTimeout(() => {
             setModal(false);

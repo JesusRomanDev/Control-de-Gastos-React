@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import {CircularProgressbar, buildStyles} from 'react-circular-progressbar'
+import 'react-circular-progressbar/dist/styles.css'
 
 const ControlPresupuesto = ({presupuesto, gastos}) => {
     const [disponible, setDisponible] = useState(0);
     const [gastado, setGastado] = useState(0);
+
+    //Registrando un nuevo State para la barra de Progreso
+    const [procentaje, setPorcentaje] = useState(0);
 
     //Reaccionando cada vez que cambie gastos
     useEffect(()=>{
@@ -10,7 +15,16 @@ const ControlPresupuesto = ({presupuesto, gastos}) => {
             return gasto.cantidad + total
         }, 0)
 
-        setDisponible(presupuesto - totalGastado);
+        const totalDisponible = presupuesto - totalGastado;
+
+        //Calcular el porcentaje Gastado
+        const nuevoPorcentaje = (((presupuesto - totalDisponible) / presupuesto) * 100).toFixed(2); //tendra max 2 digitos decimales la operacion
+
+        setTimeout(() => {
+            setPorcentaje(nuevoPorcentaje);
+        }, 2000);
+
+        setDisponible(totalDisponible);
         setGastado(totalGastado);
     }, [gastos])
 
@@ -25,7 +39,14 @@ const ControlPresupuesto = ({presupuesto, gastos}) => {
   return (
     <div className='contenedor-presupuesto contenedor sombra dos-columnas'>
         <div>
-            <p>Grafica Aqui</p>
+            <CircularProgressbar 
+            value={procentaje} 
+            styles={buildStyles({ /* buildstyles es una funcion y dentro le pondremos un objeto con los estilos que querramos */
+                pathColor:'#2B82F6',
+                trailColor: '#F5F5F5'
+            })}
+            text={`${procentaje}% gastado`}
+            />
         </div>
         <div className='contenido-presupuesto'>
             <p>

@@ -55,6 +55,7 @@ function App() {
         return gastoState.id === gasto.id ? gasto : gastoState
       })
       setGastos(gastosActualizados);
+      setGastoEditar({}); //COMO CONSEJO SIEMPRE ES BUENO REINICIAR EL STATE
     }else{
       //Nuevo Gasto
       gasto.id = generarId(); //Nota importante: AQUI SE CREA EL ID, donde se llama la funcion de guardarGasto tenemos un parametro de id, pero va VACIO ya que le estamos pasando UN OBJETO COMO ARGUMENTO CUANDO LO LLAMAMOS, va asi id=''
@@ -111,6 +112,7 @@ function App() {
       setAnimarModal={setAnimarModal}
       guardarGasto={guardarGasto}
       gastoEditar={gastoEditar} //pasandole el gastoEditar para que llene los campos en Modal
+      setGastoEditar={setGastoEditar} //es para resetear el state al finalizar un gasto editado
       />}
     </div>
   )
