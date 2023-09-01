@@ -6,7 +6,8 @@ import { generarId } from './helpers';
 import ListadoGastos from '../components/ListadoGastos';
 
 function App() {
-  const [presupuesto, setPresupuesto] = useState(0); //estos van para el formulario, pasando primero por el Header luego a Nuevo Presupuesto que es donde esta el formulario
+  const [presupuesto, setPresupuesto] = useState(
+    Number(localStorage.getItem('presupuesto')) ?? 0); //estos van para el formulario, pasando primero por el Header luego a Nuevo Presupuesto que es donde esta el formulario NOTA: se edito para hacerlo compatible con LocalStorage antes su useState solo era 0
 
   //Este state nos servira para mostrar la imagen del + y agregar abrir el componente control presupuesto donde se muestra el disponible, gastado, presupuesto
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false);
@@ -18,8 +19,9 @@ function App() {
   const [animarModal, setAnimarModal] = useState(false);
   //Nota IMPORTANTE: al parecer cuando usamos un useState que su valor es un booleano (true/false), el true/false de la variable se usa para los ternarios (en el HTML/return), en cambio la funcion modificadora si la usamos directamente al poner setAnimarModal(false/true), solo para modificar
 
-  //Para el arreglo de objetos, este lo usaremos en la funcion de guardarGasto y lo pasaremos a el componente ControlPresupuesto, pasando primero por Header
-  const [gastos, setGastos] = useState([]);
+  //Para el arreglo de objetos, este lo usaremos en la funcion de guardarGasto y lo pasaremos a el componente ControlPresupuesto, pasando primero por Header, este se edito, antes su useState era [], pero para hacerlo funcional con LocalStorage, asi quedo
+  const [gastos, setGastos] = useState(
+    localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : []);
   
   //Definiendo un state mas para Gasto, pero primero pasando por ListadoGastos, este iniciara como objeto vacio para poder llenarse mas tarde, esta funcion modificadora ira a la funcion de LeadingAction cuando se de swipe a editar
   const [gastoEditar, setGastoEditar] = useState({});
@@ -35,6 +37,25 @@ function App() {
       }, 1000);
     }
   }, [gastoEditar])
+
+  //useEffect para el LocalStorage para setearlo
+  useEffect(()=>{
+    localStorage.setItem('presupuesto', presupuesto ?? 0)
+  }, [presupuesto])
+
+  //useEffecr para setear los gastos en Local Storage Nota: aqui si usamos JSON.stringify porque es un arreglo, el de arriba no
+  useEffect(()=>{
+    localStorage.setItem('gastos', JSON.stringify(gastos) ?? [])
+  }, [gastos])
+
+
+  //useEffect para obtener el item y si es mayor a 0, entonces es un presupuesto valido
+  useEffect(()=>{
+    const presupuestoLS = Number(localStorage.getItem('presupuesto')) ?? 0;
+    if(presupuestoLS > 0){
+      setIsValidPresupuesto(true)
+    }
+  }, [])
 
   const handleNuevoGasto = () => {
     setModal(true);
