@@ -4,6 +4,7 @@ import IconoNuevoGasto from "./img/nuevo-gasto.svg"
 import Modal from '../components/Modal';
 import { generarId } from './helpers';
 import ListadoGastos from '../components/ListadoGastos';
+import Filtros from '../components/Filtros';
 
 function App() {
   const [presupuesto, setPresupuesto] = useState(
@@ -25,6 +26,12 @@ function App() {
   
   //Definiendo un state mas para Gasto, pero primero pasando por ListadoGastos, este iniciara como objeto vacio para poder llenarse mas tarde, esta funcion modificadora ira a la funcion de LeadingAction cuando se de swipe a editar
   const [gastoEditar, setGastoEditar] = useState({});
+
+  //Agregando un state para cuando se filtre alguna categoria
+  const [filtro, setFiltro] = useState('');
+
+  //Agregando un state para mostrar los Filtrado, esto es para no usar setGastos ya que perderiamos los demas gastos
+  const [gastosFiltrados, setGastosFiltrados] = useState([]); //es un arreglo vacio YA QUE PUEDE SER MAS DE 1 ELEMENTO
 
   //Agregando un useEffect, para que cuando demos swipe se abra el modal y nos llene la informacion, este useeffect reaccionara cuando cambie gastoEditar
   useEffect(()=>{
@@ -56,6 +63,17 @@ function App() {
       setIsValidPresupuesto(true)
     }
   }, [])
+
+  //Agregando un useEffect para los cambios que sucedan en el state FILTRO
+  useEffect(()=>{
+    if(filtro){
+      const gastosFiltradosVar = gastos.filter(gasto =>{
+        return gasto.categoria === filtro;
+      })
+      setGastosFiltrados(gastosFiltradosVar);
+    }
+  }, [filtro])
+
 
   const handleNuevoGasto = () => {
     setModal(true);
@@ -111,10 +129,16 @@ function App() {
       {isValidPresupuesto && (
         <>
           <main>
+            <Filtros 
+            filtro={filtro}
+            setFiltro={setFiltro}
+            />
             <ListadoGastos 
             gastos={gastos} //pasandole el array de gastos para mostrarlo
             setGastoEditar={setGastoEditar}
             eliminarGasto={eliminarGasto}
+            filtro={filtro} //para mostrar los gastos filtrados en el HTML
+            gastosFiltrados={gastosFiltrados} //para mostrar los gastos filtrados en el HTML
             />
           </main>
           <div className='nuevo-gasto'>
