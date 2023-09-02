@@ -16,7 +16,7 @@ const Modal = ({setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar
 
     //Este useEffect nos servira para que cuando cargue el componente de Modal, SI ES QUE gastoEditar tiene algo, entonces es que estamos editando y queremos que llene los campos del formulario, si no, pues no hagas nada, todo normal, se llenaran los campos a manopla
     useEffect(()=>{
-        if(Object.keys(gastoEditar.length > 0)){
+        if(Object.keys(gastoEditar).length > 0){
             setNombre(gastoEditar.nombre);
             setCantidad(gastoEditar.cantidad);
             setCategoria(gastoEditar.categoria);
